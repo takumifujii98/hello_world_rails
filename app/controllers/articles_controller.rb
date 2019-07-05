@@ -5,6 +5,7 @@ class ArticlesController < ApplicationController
   # GET /articles.json
   def index
     @articles = Article.all
+    render json: @articles
   end
 
   # GET /articles/1
@@ -15,29 +16,20 @@ class ArticlesController < ApplicationController
   # POST /articles
   # POST /articles.json
   def create
-    @article = Article.new(article_params)
+    Article.create!(article_params)
 
-    if @article.save
-      render :show, status: :created, location: @article
-    else
-      render json: @article.errors, status: :unprocessable_entity
-    end
   end
 
   # PATCH/PUT /articles/1
   # PATCH/PUT /articles/1.json
   def update
-    if @article.update(article_params)
-      render :show, status: :ok, location: @article
-    else
-      render json: @article.errors, status: :unprocessable_entity
-    end
+    @article.update!(article_params)
   end
 
   # DELETE /articles/1
   # DELETE /articles/1.json
   def destroy
-    @article.destroy
+    @article.destroy!
   end
 
   private
