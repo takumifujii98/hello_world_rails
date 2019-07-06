@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :update, :destroy]
+  before_action :current_user, only: [:create, :update, :destroy]
 
   # GET /articles
   # GET /articles.json
@@ -10,35 +10,37 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.json
   def show
+    Article.find(params[:id])
   end
 
   # POST /articles
   # POST /articles.json
   def create
-    Article.create!(article_params)
-
+    @current_user.create!(article_params)
   end
 
   # PATCH/PUT /articles/1
   # PATCH/PUT /articles/1.json
   def update
-    @article.update!(article_params)
+    @current_user.update!(article_params)
   end
 
   # DELETE /articles/1
   # DELETE /articles/1.json
   def destroy
-    @article.destroy!
+    @current_user.destroy!
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_article
-      @article = Article.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def article_params
-      params.require(:article).permit(:title, :body)
-    end
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def article_params
+    params.require(:article).permit(:title, :body)
+  end
+
+  def current_user
+    first_user = User.first
+    @current_user = first_user.articles.find(params[:id])
+  end
 end
