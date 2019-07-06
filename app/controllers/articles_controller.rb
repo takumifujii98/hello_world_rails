@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :current_user, only: [:create, :update, :destroy]
+  before_action :set_article, only: [:update, :destroy]
 
   # GET /articles
   # GET /articles.json
@@ -16,19 +16,19 @@ class ArticlesController < ApplicationController
   # POST /articles
   # POST /articles.json
   def create
-    @current_user.create!(article_params)
+    @current_user.articles.create!(article_params)
   end
 
   # PATCH/PUT /articles/1
   # PATCH/PUT /articles/1.json
   def update
-    @current_user.update!(article_params)
+    @article.update!(article_params)
   end
 
   # DELETE /articles/1
   # DELETE /articles/1.json
   def destroy
-    @current_user.destroy!
+    @article.destroy!
   end
 
 
@@ -39,8 +39,7 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:title, :body)
   end
 
-  def current_user
-    first_user = User.first
-    @current_user = first_user.articles.find(params[:id])
+  def set_article
+    @article = @current_user.articles.find(params[:id])
   end
 end
