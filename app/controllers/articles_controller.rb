@@ -4,13 +4,16 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.all
+    @articles = Article.all.each do |article|
+      if status: 0
+        article
+      end
   end
 
   # GET /articles/1
   # GET /articles/1.json
   def show
-    Article.find(params[:id])
+    current_user.articles.find(params[:id])
   end
 
   # POST /articles
