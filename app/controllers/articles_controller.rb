@@ -4,10 +4,7 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.all.each do |article|
-      if status: 0
-        article
-      end
+    @articles = Article.all.each
   end
 
   # GET /articles/1
