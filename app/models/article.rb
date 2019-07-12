@@ -1,4 +1,4 @@
 class Article < ApplicationRecord
   belongs_to :user
-  enum status: {draft: 0, published: 1}
+  enum status: {draft: "draft", published: "pablished"}
 end

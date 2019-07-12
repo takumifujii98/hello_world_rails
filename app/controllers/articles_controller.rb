@@ -12,9 +12,9 @@ class ArticlesController < ApplicationController
   # GET /articles/1.json
   def show
     if current_user
-    current_user.articles.find(params[:id])
+      current_user.articles.find(params[:id])
     else
-    Article.expressed.find(params[:id])
+      Article.published.find(params[:id])
     end
   end
 
