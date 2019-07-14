@@ -11,11 +11,12 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.json
   def show
-    if current_user
-      current_user.articles.find(params[:id])
-    else
-      Article.published.find(params[:id])
-    end
+    @article =
+      if current_user
+        current_user.articles.find(params[:id])
+      else
+        Article.published.find(params[:id])
+      end
   end
 
   # POST /articles
