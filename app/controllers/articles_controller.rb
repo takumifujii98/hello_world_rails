@@ -4,13 +4,19 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.all
+    #Article.published = Article.where(status: :published)
+    @articles = Article.published
   end
 
   # GET /articles/1
   # GET /articles/1.json
   def show
-    current_user.articles.find(params[:id])
+    @article =
+      if current_user
+        current_user.articles.find(params[:id])
+      else
+        Article.published.find(params[:id])
+      end
   end
 
   # POST /articles
